@@ -9,4 +9,4 @@ COPY 00_aerogear.conf /etc/httpd/conf.d/00_aerogear.conf
 RUN apachectl -k restart
 EXPOSE 80
 EXPOSE 443
-EXEC /sbin/shibd -F
+ENTRYPOINT "/bin/bash" 
