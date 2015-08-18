@@ -13,7 +13,7 @@ RUN yum -y install wget
 RUN yum -y install java-1.8.0-*
 RUN yum -y remove java-1.7.0-*
 
-#INSTALL Shibboleth
+#Download and unpack Shibboleth
 WORKDIR /opt
 RUN wget $SHIBBOLETH_URL
 
@@ -21,7 +21,18 @@ RUN tar -zxvf $SHIBBOLETH_ARCHIVE
 RUN mkdir  $SHIBBOLETH_DIRECTORY
 RUN rm $SHIBBOLETH_ARCHIVE
 
+#Install Xerces and add to shibboleth
+
+RUN wget http://apache.arvixe.com//xerces/j/binaries/Xerces-J-bin.2.11.0.tar.gz
+RUN tar -zxvf Xerces-J-bin.2.11.0.tar.gz
+RUN cp xerces-2_11_0/resolver.jar shibboleth-identity-provider-3.1.2/webapp/WEB-INF/lib/
+RUN cp xerces-2_11_0/serializer.jar shibboleth-identity-provider-3.1.2/webapp/WEB-INF/lib/
+RUN cp xerces-2_11_0/xercesImpl.jar shibboleth-identity-provider-3.1.2/webapp/WEB-INF/lib/
+RUN cp xerces-2_11_0/xml-apis.jar shibboleth-identity-provider-3.1.2/webapp/WEB-INF/lib/
+
+
 COPY feedhenry.idp.properties /opt/$SHIBBOLETH_DIRECTORY-$SHIBBOLETH_VERSION/conf/feedhenry.idp.properties
+COPY jboss-deployment-structure.xml /opt/$SHIBBOLETH_DIRECTORY-$SHIBBOLETH_VERSION/webapp/META-INF/jboss-deployment-structure.xml
 
 # Rename the original configuration file
 RUN mv /opt/wildfly/standalone/configuration/standalone-full.xml /opt/wildfly/standalone/configuration/standalone-full.xml.orig
@@ -40,6 +51,11 @@ RUN ./certificate.sh
 
 WORKDIR /opt/$SHIBBOLETH_DIRECTORY-$SHIBBOLETH_VERSION
 RUN ./bin/install.sh -Didp.merge.properties=/opt/$SHIBBOLETH_DIRECTORY-$SHIBBOLETH_VERSION/conf/feedhenry.idp.properties -Didp.target.dir=/opt/$SHIBBOLETH_DIRECTORY -Didp.host.name=idp -Didp.scope=feedhenry -Didp.keystore.password=password -Didp.sealer.password=password
+
+# COPY War file to wildfly
+WORKDIR /opt
+RUN cp $SHIBBOLETH_DIRECTORY/war/idp.war /opt/wildfly/standalone/deployments/
+
 
 # Expose SSL default port
 EXPOSE 8443

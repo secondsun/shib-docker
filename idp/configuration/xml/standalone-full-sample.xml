@@ -29,6 +29,12 @@
         <extension module="org.wildfly.extension.io"/>
         <extension module="org.wildfly.extension.undertow"/>
     </extensions>
+
+    <system-properties>
+        <property name="idp.home" value="/opt/shibboleth-identity-provider"/>
+        <property name="idp.xml.securityManager" value="org.apache.xerces.util.SecurityManager"/>
+    </system-properties>
+
     <management>
         <security-realms>
             <security-realm name="ManagementRealm">
