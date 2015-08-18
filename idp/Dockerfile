@@ -5,6 +5,7 @@ ENV SHIBBOLETH_DIRECTORY=shibboleth-identity-provider
 ENV SHIBBOLETH_ARCHIVE=$SHIBBOLETH_DIRECTORY-$SHIBBOLETH_VERSION.tar.gz
 ENV SHIBBOLETH_URL=http://shibboleth.net/downloads/identity-provider/latest/$SHIBBOLETH_ARCHIVE
 ENV JAVA_HOME=/usr/lib/jvm/java/
+ENV HOST_IP=172.17.42.1
 
 #Prepare System
 USER root
@@ -20,6 +21,8 @@ RUN wget $SHIBBOLETH_URL
 RUN tar -zxvf $SHIBBOLETH_ARCHIVE
 RUN mkdir  $SHIBBOLETH_DIRECTORY
 RUN rm $SHIBBOLETH_ARCHIVE
+
+RUN sed -i -r "s/('::1\\/128')/\1,'$HOST_IP'/g" /opt/$SHIBBOLETH_DIRECTORY-$SHIBBOLETH_VERSION/conf/access-control.xml
 
 #Install Xerces and add to shibboleth
 
