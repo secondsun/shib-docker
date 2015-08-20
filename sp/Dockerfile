@@ -6,7 +6,10 @@ RUN wget http://download.opensuse.org/repositories/security://shibboleth/CentOS_
 RUN yum -y install shibboleth.x86_64
 RUN yum -y install mod_ssl
 COPY 00_aerogear.conf /etc/httpd/conf.d/00_aerogear.conf
-RUN apachectl -k restart
 EXPOSE 80
 EXPOSE 443
-ENTRYPOINT "/bin/bash" 
+
+
+WORKDIR /opt
+COPY startup.sh /opt/startup.sh
+ENTRYPOINT ["/opt/startup.sh"]
