@@ -9,6 +9,12 @@ RUN  yum -y install wget
 RUN wget http://download.opensuse.org/repositories/security://shibboleth/CentOS_7/security:shibboleth.repo
 RUN yum -y install shibboleth.x86_64
 RUN yum -y install mod_ssl
+
+RUN mkdir /etc/httpd/certs/
+ADD certs/certificate.sh /etc/httpd/certs/
+WORKDIR /etc/httpd/certs
+RUN ./certificate.sh
+
 COPY 00_aerogear.conf /etc/httpd/conf.d/00_aerogear.conf
 
 EXPOSE 80
