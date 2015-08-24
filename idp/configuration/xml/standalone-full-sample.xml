@@ -58,7 +58,7 @@
             <security-realm name="AeroGearRealm">
                 <server-identities>
                     <ssl>
-                        <keystore path="certs/server.aerogear.dev.keystore" relative-to="jboss.server.config.dir" keystore-password="weak42" alias="server.aerogear.dev"/>
+                        <keystore path="certs/idpserver.keystore" relative-to="jboss.server.config.dir" keystore-password="weak42" alias="idpserver"/>
                     </ssl>
                 </server-identities>
             </security-realm>

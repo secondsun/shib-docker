@@ -4,7 +4,7 @@ DOMAIN="aerogear.dev"
 
 SERVER_PASSWORD=$(head -c 2000 /dev/urandom | tr -dc a-z0-9A-Z | head -c 256)
 
-keytool -genkey -noprompt -alias server.$DOMAIN -keyalg RSA -keysize 2048 -keystore server.$DOMAIN.keystore -storepass $SERVER_PASSWORD -keypass $SERVER_PASSWORD -validity 365 -dname "C=US,ST=North Carolina,O=Red Hat,L=Raleigh,CN=server.aerogear.dev,OU=DEVELOPMENT,emailAddress=aerogear@aerogear.org"
+keytool -genkey -noprompt -alias idpserver -keyalg RSA -keysize 2048 -keystore idpserver.keystore -storepass $SERVER_PASSWORD -keypass $SERVER_PASSWORD -validity 365 -dname "C=US,ST=North Carolina,O=Red Hat,L=Raleigh,CN=idpserver,OU=DEVELOPMENT,emailAddress=aerogear@aerogear.org"
 
 sed -i "s/weak42/$SERVER_PASSWORD/g" ../standalone-full.xml
 
