@@ -20,8 +20,7 @@ COPY 00_aerogear.conf /etc/httpd/conf.d/00_aerogear.conf
 EXPOSE 80
 EXPOSE 443
 
-RUN sed -i -r "s/(::1)/\1 $HOST_IP/g" /etc/shibboleth/shibboleth2.xml
-
+COPY shibboleth/shibboleth2.xml /etc/shibboleth/shibboleth2.xml
 
 WORKDIR /opt
 COPY startup.sh /opt/startup.sh
