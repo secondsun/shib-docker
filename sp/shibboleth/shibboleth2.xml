@@ -26,7 +26,7 @@
         <!--
         Controls session lifetimes, address checks, cookie handling, and the protocol handlers.
         You MUST supply an effectively unique handlerURL value for each of your applications.
-        The value defaults to /Shibboleth.sso, and should be a relative path, with the SP computing
+        The value defaults to /Shibbolserverbe a relative path, with the SP computing
         a relative value based on the virtual host. Using handlerSSL="true", the default, will force
         the protocol to be https. You should also set cookieProps to "https" for SSL-only sites.
         Note that while we default checkAddress to "false", this has a negative impact on the
@@ -83,6 +83,11 @@
               attributeValue="http://refeds.org/category/hide-from-discovery" />
         </MetadataProvider>
         -->
+
+	<MetadataProvider type="XML" url="https://idpserver/Shibboleth.sso/Metadata" backingFilePath="docker_idp_metadata.xml">
+            <TransportOption provider="CURL" option="64">0</TransportOption><!-- Do not verify SSL certificate CURLOPT_SSL_VERIFYPEER -->
+            <TransportOption provider="CURL" option="81">0</TransportOption><!-- Do not verify SSL certificate CURLOPT_SSL_VERIFYHOST-->
+        </MetadataProvider>
 
         <!-- Example of locally maintained metadata. -->
         <!--
