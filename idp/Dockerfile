@@ -37,6 +37,8 @@ RUN cp xerces-2_11_0/xml-apis.jar shibboleth-identity-provider-3.1.2/webapp/WEB-
 COPY feedhenry.idp.properties /opt/$SHIBBOLETH_DIRECTORY-$SHIBBOLETH_VERSION/conf/feedhenry.idp.properties
 COPY shibboleth/conf/authn/jaas.config /opt/$SHIBBOLETH_DIRECTORY-$SHIBBOLETH_VERSION/conf/authn/jaas.config
 COPY shibboleth/conf/authn/password-authn-config.xml /opt/$SHIBBOLETH_DIRECTORY-$SHIBBOLETH_VERSION/conf/authn/password-authn-config.xml
+COPY shibboleth/conf/metadata-providers.xml /opt/$SHIBBOLETH_DIRECTORY-$SHIBBOLETH_VERSION/conf/metadata-providers.xml
+COPY shibboleth/sp.metadata.xml /opt/$SHIBBOLETH_DIRECTORY-$SHIBBOLETH_VERSION/sp.metadata.xml
 
 COPY jboss-deployment-structure.xml /opt/$SHIBBOLETH_DIRECTORY-$SHIBBOLETH_VERSION/webapp/META-INF/jboss-deployment-structure.xml
 
